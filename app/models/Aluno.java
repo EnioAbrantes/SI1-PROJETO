@@ -18,6 +18,7 @@ public class Aluno extends Model {
     @Id
     private Long id;
 
+    @Constraints.Required
     private String nome;
 
     @Constraints.Required

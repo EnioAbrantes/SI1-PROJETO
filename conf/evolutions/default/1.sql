@@ -21,8 +21,7 @@ create table carona (
   tolerancia                integer,
   data                      varchar(255),
   hora                      varchar(255),
-  sentido                   varchar(1),
-  constraint ck_carona_sentido check (sentido in ('V','I')),
+  sentido                   varchar(255),
   constraint pk_carona primary key (id))
 ;
 

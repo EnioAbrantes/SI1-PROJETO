@@ -1,7 +1,6 @@
 package models;
 
 import com.avaje.ebean.Model;
-import com.avaje.ebean.annotation.EnumValue;
 import play.data.validation.Constraints;
 
 import javax.persistence.Entity;
@@ -31,18 +30,48 @@ public class Carona extends Model {
     private String hora;
 
     @Constraints.Required
-    private Orientacao sentido;
+    private String sentido;
 
-    static enum Orientacao {
-        @EnumValue("I") IDA,
-        @EnumValue("V") VOLTA
+//    static enum Orientacao {
+
+    public Carona(Long id, Aluno criador, int vagas, int tolerancia, String data, String hora, String sentido) {
+        this.id = id;
+        this.criador = criador;
+        this.vagas = vagas;
+        this.tolerancia = tolerancia;
+        this.data = data;
+        this.hora = hora;
+        this.sentido = sentido;
     }
 
-    public Orientacao getSentido() {
+    public Carona(Long id, Aluno criador, int tolerancia, String data, String hora, String sentido) {
+        this.id = id;
+        this.criador = criador;
+        this.tolerancia = tolerancia;
+        this.data = data;
+        this.hora = hora;
+        this.sentido = sentido;
+    }
+
+    public Carona(Long id, Aluno criador, int vagas, int tolerancia, String data, String hora) {
+        this.id = id;
+        this.criador = criador;
+        this.vagas = vagas;
+        this.tolerancia = tolerancia;
+        this.data = data;
+        this.hora = hora;
+        this.sentido = sentido;
+    }
+
+//        @EnumValue("I") IDA,
+//        @EnumValue("V") VOLTA
+//    }
+
+    public String getSentido() {
         return sentido;
     }
 
-    public void setSentido(Orientacao sentido) {
+    public void setSentido(String sentido) {
         this.sentido = sentido;
     }
 
@@ -92,6 +121,12 @@ public class Carona extends Model {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public void decrementarVaga(){
+        if(vagas > 0) {
+            vagas -= 1;
+        }
     }
 
 }

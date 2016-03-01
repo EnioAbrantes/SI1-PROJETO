@@ -1,12 +1,84 @@
-@(message: String)
+@(caronas: java.util.List[models.Carona])
 
-@main("Bem-vindo ao Carona UFCG") {
+@main("Bem-vindo ao Carona UFCG") {-->
 
 <div class="container">
 
-    <h1>
-        @message
-    </h1>
+    <div class="container">
+
+
+        <h2>CARONA UFCG</h2>
+        <ul class="timeline">
+            @for(carona <- caronas) {
+                @if(carona.getSentido == "IDA"){
+                <li>
+                    <div class="timeline-badge">
+                        <a><i class="fa fa-circle" id="t1"></i></a>
+                    </div>
+                    <div class="timeline-panel">
+                        <div class="timeline-heading">
+                            @if(carona.getVagas == -1){
+                            <h4>Pedido de Carona sentido @carona.getSentido</h4>
+                            } else {
+                            <h4>Oferta de Carona sentido @carona.getSentido</h4>
+                            }
+                        </div>
+                        <div class="timeline-body">
+                            @if(carona.getVagas == -1){
+                                <p>O aluno @carona.getCriador.getNome cuja matrícula é @carona.getCriador.getMatricula está pedindo uma carona para a UFCG a partir da cidade @carona.getCriador.getCidade e bairro @carona.getCriador.getBairro as @carona.getHora horas com uma tolerância de @carona.getTolerancia minutos.</p>
+                            } else {
+                                <p>O aluno @carona.getCriador.getNome cuja matrícula é @carona.getCriador.getMatricula está oferecendo uma carona para a UFCG a partir da cidade @carona.getCriador.getCidade e bairro @carona.getCriador.getBairro as @carona.getHora horas e dispoe de @carona.getVagas vagas com uma tolerância de @carona.getTolerancia minutos.</p>
+                            }
+                            <p class="text-right">@carona.getData</p>
+                        </div>
+                        <div class="timeline-footer">
+                            @if(carona.getVagas == -1){
+                                <a onClick = "this.style.visibility= 'hidden';">Fornecer a Carona</a>
+                            }@if(carona.getVagas == 0){
+                                <a hidden="true" href="@{routes.Application.diminuirVagas(carona.getId)}">Pegar Carona</a>
+                            }@if(carona.getVagas > 0){
+                                <a href="@{routes.Application.diminuirVagas(carona.getId)}">Pegar Carona</a>
+                            }
+                        </div>
+                    </div>
+                </li>
+                } else {
+                <li class="timeline-inverted">
+                    <div class="timeline-badge">
+                        <a><i class="fa fa-circle invert" id="t2"></i></a>
+                    </div>
+                    <div class="timeline-panel">
+                        <div class="timeline-heading">
+                            @if(carona.getVagas == -1){
+                                <h4>Pedido de Carona sentido @carona.getSentido</h4>
+                            } else {
+                                <h4>Oferta de Carona sentido @carona.getSentido</h4>
+                            }
+                        </div>
+                        <div class="timeline-body">
+                            @if(carona.getVagas == -1){
+                                <p>O aluno @carona.getCriador.getNome cuja matrícula é @carona.getCriador.getMatricula está pedindo uma carona para a UFCG a partir da cidade @carona.getCriador.getCidade e bairro @carona.getCriador.getBairro as @carona.getHora horas com uma tolerância de @carona.getTolerancia minutos.</p>
+                            } else {
+                                <p>O aluno @carona.getCriador.getNome cuja matrícula é @carona.getCriador.getMatricula está oferencendo uma carona para a UFCG a partir da cidade @carona.getCriador.getCidade e bairro @carona.getCriador.getBairro as @carona.getHora horas e dispoe de @carona.getVagas vagas com uma tolerância de @carona.getTolerancia minutos.</p>
+                            }
+                            <p class="text-right">@carona.getData</p>
+                        </div>
+                        <div class="timeline-footer">
+                            @if(carona.getVagas == -1){
+                                <a onClick = "this.style.visibility= 'hidden';">Fornecer a Carona</a>
+                            }@if(carona.getVagas == 0){
+                                <a hidden="true" href="@{routes.Application.diminuirVagas(carona.getId)}">Pegar Carona</a>
+                            }@if(carona.getVagas > 0){
+                                <a href="@{routes.Application.diminuirVagas(carona.getId)}">Pegar Carona</a>
+                            }
+                        </div>
+                    </div>
+                </li>
+                }
+            }
+            <li class="clearfix no-float"></li>
+        </ul>
+    </div>
 
 
 </div> <!-- /container -->

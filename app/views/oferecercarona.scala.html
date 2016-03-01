@@ -5,29 +5,30 @@
         <h2 class="form-heading">Oferecer Carona</h2>
         <form class="col-md-9 form-horizontal" role="form" method="POST" action="@routes.Application.novaCarona" >
             <div class="form-group">
-            <div class="radio-group">
-                <label class="radio-inline"><input type="radio" value="I" name="sentido">Ida</label>
-                <label class="radio-inline"><input type="radio" value="V" name="sentido">Volta</label>
-            </div>
+                <div class="radio-group">
+                    <label class="radio-inline"><input type="radio"  required autofocus value="IDA"  id="r1" name="sentido">Ida</label>
+                    <label class="radio-inline"><input type="radio"  required autofocus value="VOLTA" id="r2" name="sentido">Volta</label>
+                </div>
 
-            <div class="form-group">
-                <label for="hora">Horário: </label>
-                <input type="text" id="hora" name="hora"  class="form-control" required autofocus>
-            </div>
+                <div class="form-group">
+                    <label for="hora">Horário: </label>
+                    <input type="text" id="hora" name="hora" class="form-control" required autofocus>
+                </div>
 
-            <div class="form-group">
-                <label for="vagas">Quantidade de vagas: </label>
-                <input type="number" id="vagas" name="vagas" class="form-control" required>
-            </div>
+                <div class="form-group">
+                    <label for="vagas">Quantidade de vagas: </label>
+                    <input type="number" id="vagas" name="vagas" class="form-control" required>
+                </div>
 
-            <div class="form-group">
-                <label for="data">Data: </label>
-                <input type="text" id="data" name="data" class="form-control" required>
-            </div>
+                <div class="form-group">
+                    <label for="data">Data: </label>
+                    <input type="text" id="data" name="data" class="form-control" required>
+                </div>
 
-            <div class="form-group">
-                <label for="tolerancia">Tempo de Tolerância: </label>
-                <input type="number" id="tolerancia" name="tolerancia" class="form-control" required>
+                <div class="form-group">
+                    <label for="tolerancia">Tempo de Tolerância: </label>
+                    <input type="number" id="tolerancia" name="tolerancia" class="form-control" required>
+                </div>
             </div>
 
         <button class="btn btn-lg btn-primary btn-block" type="submit">Oferecer Carona</button>
