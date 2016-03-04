@@ -17,14 +17,14 @@
                     </div>
                     <div class="timeline-panel">
                         <div class="timeline-heading">
-                            @if(carona.getVagas == -1){
+                            @if(carona.getVagas <= -1){
                             <h4>Pedido de Carona sentido @carona.getSentido</h4>
                             } else {
                             <h4>Oferta de Carona sentido @carona.getSentido</h4>
                             }
                         </div>
                         <div class="timeline-body">
-                            @if(carona.getVagas == -1){
+                            @if(carona.getVagas <= -1){
                                 <p>O aluno @carona.getCriador.getNome cuja matrícula é @carona.getCriador.getMatricula está pedindo uma carona para a UFCG a partir da cidade @carona.getCriador.getCidade e bairro @carona.getCriador.getBairro as @carona.getHora horas com uma tolerância de @carona.getTolerancia minutos.</p>
                             } else {
                                 <p>O aluno @carona.getCriador.getNome cuja matrícula é @carona.getCriador.getMatricula está oferecendo uma carona para a UFCG a partir da cidade @carona.getCriador.getCidade e bairro @carona.getCriador.getBairro as @carona.getHora horas e dispoe de @carona.getVagas vagas com uma tolerância de @carona.getTolerancia minutos.</p>
@@ -33,11 +33,13 @@
                         </div>
                         <div class="timeline-footer">
                             @if(carona.getVagas == -1){
-                                <a onClick = "this.style.visibility= 'hidden';">Fornecer a Carona</a>
+                            <a href="@{routes.Application.diminuirVagas(carona.getId)}">Fornecer a Carona</a>
                             }@if(carona.getVagas == 0){
-                                <a hidden="true" href="@{routes.Application.diminuirVagas(carona.getId)}">Pegar Carona</a>
+                            <a hidden="true" href="@{routes.Application.diminuirVagas(carona.getId)}">Pegar Carona</a>
                             }@if(carona.getVagas > 0){
-                                <a href="@{routes.Application.diminuirVagas(carona.getId)}">Pegar Carona</a>
+                            <a href="@{routes.Application.diminuirVagas(carona.getId)}">Pegar Carona</a>
+                            }@if(carona.getVagas == -2){
+                            <a hidden="true" href="@{routes.Application.diminuirVagas(carona.getId)}">Fornecer a Carona</a>
                             }
                         </div>
                     </div>
@@ -49,14 +51,14 @@
                     </div>
                     <div class="timeline-panel">
                         <div class="timeline-heading">
-                            @if(carona.getVagas == -1){
+                            @if(carona.getVagas <= -1){
                                 <h4>Pedido de Carona sentido @carona.getSentido</h4>
                             } else {
                                 <h4>Oferta de Carona sentido @carona.getSentido</h4>
                             }
                         </div>
                         <div class="timeline-body">
-                            @if(carona.getVagas == -1){
+                            @if(carona.getVagas <= -1){
                                 <p>O aluno @carona.getCriador.getNome cuja matrícula é @carona.getCriador.getMatricula está pedindo uma carona para a UFCG a partir da cidade @carona.getCriador.getCidade e bairro @carona.getCriador.getBairro as @carona.getHora horas com uma tolerância de @carona.getTolerancia minutos.</p>
                             } else {
                                 <p>O aluno @carona.getCriador.getNome cuja matrícula é @carona.getCriador.getMatricula está oferencendo uma carona para a UFCG a partir da cidade @carona.getCriador.getCidade e bairro @carona.getCriador.getBairro as @carona.getHora horas e dispoe de @carona.getVagas vagas com uma tolerância de @carona.getTolerancia minutos.</p>
@@ -65,11 +67,13 @@
                         </div>
                         <div class="timeline-footer">
                             @if(carona.getVagas == -1){
-                                <a onClick = "this.style.visibility= 'hidden';">Fornecer a Carona</a>
+                                <a href="@{routes.Application.diminuirVagas(carona.getId)}">Fornecer a Carona</a>
                             }@if(carona.getVagas == 0){
                                 <a hidden="true" href="@{routes.Application.diminuirVagas(carona.getId)}">Pegar Carona</a>
                             }@if(carona.getVagas > 0){
                                 <a href="@{routes.Application.diminuirVagas(carona.getId)}">Pegar Carona</a>
+                            }@if(carona.getVagas == -2){
+                                <a hidden="true" href="@{routes.Application.diminuirVagas(carona.getId)}">Fornecer a Carona</a>
                             }
                         </div>
                     </div>

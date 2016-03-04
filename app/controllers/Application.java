@@ -9,6 +9,7 @@ import play.mvc.Controller;
 import play.mvc.Result;
 
 import javax.inject.Inject;
+import java.util.LinkedList;
 import java.util.List;
 
 import static play.data.Form.form;
@@ -18,6 +19,8 @@ public class Application extends Controller {
     //private static GenericDAO dao = new GenericDAO();
     @Inject
     static EbeanServer ebeanServer = Ebean.getServer(null);
+    static List<Carona> meusPedidos = new LinkedList<Carona>();
+    static List<Carona> minhasOfertas = new LinkedList<Carona>();
 
     public Result index() {
         List<Carona> caronas = ebeanServer.find(Carona.class).findList();
@@ -50,11 +53,11 @@ public class Application extends Controller {
             Carona carona = caronaForm.bindFromRequest().get();
             carona.setCriador(getAlunoFromSession());
             carona.save();
-            //return ok(views.html.index.render("OLÁ " + carona));
+            minhasOfertas(carona);
             List<Carona> caronas = ebeanServer.find(Carona.class).findList();
             return ok(views.html.index.render(caronas));
         }else {
-            return ok("Problema ao logar!");
+            return ok(views.html.login.render("Você precisa entrar em sua conta para realizar uma oferta de carona!"));
         }
     }
 
@@ -65,13 +68,14 @@ public class Application extends Controller {
             carona.setVagas(-1);
             carona.setCriador(getAlunoFromSession());
             carona.save();
+            meusPedidos(carona);
             List<Carona> caronas = ebeanServer.find(Carona.class).findList();
             return ok(views.html.index.render(caronas));
         }else {
-            return ok("Problema ao logar!");
+            return ok(views.html.login.render("Você precisa entrar em sua conta para realizar um pedido de carona!"));
         }
     }
-
+    //arrumar isso
     public Result verCaronas() {
         List<Carona> caronas = ebeanServer.find(Carona.class).findList();
 
@@ -89,16 +93,61 @@ public class Application extends Controller {
         Aluno aluno = alunoForm.bindFromRequest().get();
         aluno.save();
         logout();
-        return ok(views.html.login.render());
+        return ok(views.html.login.render("Entre em sua conta"));
     }
 
     public Result sair() {
         logout();
-        return ok(views.html.login.render());
+        return ok(views.html.login.render("Entre em sua conta"));
     }
 
     public Result login() {
-        return ok(views.html.login.render());
+        return ok(views.html.login.render("Entre em sua conta"));
+    }
+
+    public Result getPedidos() {
+        List<Carona>  pedidos = new LinkedList<Carona>();
+        for (Carona meuPedido : meusPedidos){
+            try {
+                if (getAlunoFromSession().getEmail().equals(meuPedido.getCriador().getEmail()) && getAlunoFromSession().getEmail().equals(meuPedido.getCriador().getEmail())) {
+                    pedidos.add(meuPedido);
+                }
+            }catch(Exception e){
+                return ok(views.html.login.render("Você precisa entrar em sua conta para ver seus pedidos de carona!"));
+            }
+        }
+        return ok(views.html.meuspedidos.render(pedidos));
+    }
+
+    public Result getOfertas() {
+        List<Carona>  ofertas = new LinkedList<Carona>();
+        for (Carona minhaOferta : minhasOfertas){
+            try {
+                if (getAlunoFromSession().getEmail().equals(minhaOferta.getCriador().getEmail()) && getAlunoFromSession().getEmail().equals(minhaOferta.getCriador().getEmail())){
+                    ofertas.add(minhaOferta);
+                }
+            }catch(Exception e){
+                return ok(views.html.login.render("Você precisa entrar em sua conta para ver seus pedidos de carona!"));
+            }
+        }
+        return ok(views.html.minhasofertas.render(ofertas));
+    }
+
+    public void meusPedidos(Carona carona) {
+        if(getAlunoFromSession() != null){
+            if(getAlunoFromSession().getEmail().equals(carona.getCriador().getEmail()) && getAlunoFromSession().getEmail().equals(carona.getCriador().getEmail())){
+                meusPedidos.add(carona);
+            }
+        }
+    }
+
+
+    public void minhasOfertas(Carona carona) {
+        if(getAlunoFromSession() != null){
+            if(getAlunoFromSession().getEmail().equals(carona.getCriador().getEmail()) && getAlunoFromSession().getEmail().equals(carona.getCriador().getEmail())){
+                minhasOfertas.add(carona);
+            }
+        }
     }
 
     public Result logar() {
@@ -114,15 +163,25 @@ public class Application extends Controller {
             return ok(views.html.oferecercarona.render());
         }
         // mensagem de login errado
-        return ok(views.html.oferecercarona.render());
+
+        return ok(views.html.login.render("Email incorreto ou senha incorreta"));
     }
 
     public Result diminuirVagas(Long id) {
         Carona carona = ebeanServer.find(Carona.class).setId(id).findUnique();
-        if (getAlunoFromSession().getCidade().equals(carona.getCriador().getCidade()) && getAlunoFromSession().getBairro().equals(carona.getCriador().getBairro())){
-            carona.decrementarVaga();
-            carona.save();
-            return redirect(controllers.routes.Application.index());
+        try {
+            if (getAlunoFromSession().getCidade().equals(carona.getCriador().getCidade()) && getAlunoFromSession().getBairro().equals(carona.getCriador().getBairro()) && carona.getVagas() > -1) {
+                carona.decrementarVaga();
+                carona.save();
+                return redirect(controllers.routes.Application.index());
+            }
+            if (getAlunoFromSession().getCidade().equals(carona.getCriador().getCidade()) && getAlunoFromSession().getBairro().equals(carona.getCriador().getBairro()) && carona.getVagas() == -1) {
+                carona.setVagas(-2);
+                carona.save();
+                return redirect(controllers.routes.Application.index());
+            }
+        }catch (Exception e){
+            return ok(views.html.login.render(""));
         }
         //sem mudanças
         return  redirect(controllers.routes.Application.index());

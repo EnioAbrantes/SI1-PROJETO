@@ -12,6 +12,8 @@ GET     /sair                       controllers.Application.sair()
 POST    /cadastro                   controllers.Application.criarConta()
 GET     /diminuirVagas/:id          controllers.Application.diminuirVagas(id : Long)
 # --------------------------------------------------------------------------
+GET     /getOfertas                 controllers.Application.getOfertas()
+GET     /getPedidos                 controllers.Application.getPedidos()
 GET     /pedirCarona                controllers.Application.pedirCarona()
 GET     /oferecerCarona             controllers.Application.oferecerCarona()
 POST    /novaCarona                 controllers.Application.novaCarona()
