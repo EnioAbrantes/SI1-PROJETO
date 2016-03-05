@@ -18,7 +18,6 @@ GET     /pedirCarona                controllers.Application.pedirCarona()
 GET     /oferecerCarona             controllers.Application.oferecerCarona()
 POST    /novaCarona                 controllers.Application.novaCarona()
 POST    /novoPedido                 controllers.Application.novoPedido()
-GET     /verOfertas                 controllers.Application.verOfertas()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)

@@ -60,12 +60,7 @@ public class Carona extends Model {
         this.tolerancia = tolerancia;
         this.data = data;
         this.hora = hora;
-        this.sentido = sentido;
     }
-
-//        @EnumValue("I") IDA,
-//        @EnumValue("V") VOLTA
-//    }
 
     public String getSentido() {
         return sentido;
